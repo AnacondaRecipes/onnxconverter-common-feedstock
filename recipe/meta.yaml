@@ -12,16 +12,18 @@ source:
 
 build:
   number: 0
-  noarch: python
+  skip: true  # [py<35]
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python
+    - wheel
+    - setuptools
   run:
     - packaging
-    - python >=3.6
+    - python
     - numpy
     - protobuf
     - onnx
@@ -37,8 +39,13 @@ test:
 about:
   home: https://github.com/microsoft/onnxconverter-common
   summary: Common utilities for ONNX converters
+  description: |
+    The onnxconverter-common package provides common functions and utilities for use in converters from various AI frameworks to ONNX. It also enables the different converters to work together to convert a model from mixed frameworks, like a scikit-learn pipeline embedding a xgboost model.
   license: MIT
   license_file: LICENSE
+  license_family: MIT
+  dev_url: https://github.com/microsoft/onnxconverter-common
+  doc_url: https://github.com/microsoft/onnxconverter-common/blob/master/README.md
 
 extra:
   recipe-maintainers:
