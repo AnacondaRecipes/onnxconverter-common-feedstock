@@ -1,5 +1,5 @@
 {% set name = "onnxconverter-common" %}
-{% set version = "1.13.0" %}
+{% set version = "1.14.0" %}
 
 
 package:
@@ -8,25 +8,33 @@ package:
 
 source:
   url: https://github.com/microsoft/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 78fa4fbc9eb180d31caad30e383489375d5b1796f369b62ac48ee1b7feb00faf
+  sha256: a7eb7067875b498a5db4ca75ae67c8b258b489ea85acce23e95a0d0d522c79ca
+  patches:
+    - patches/0001_remove_protobuf_requirement.patch
 
 build:
   number: 0
-  skip: true  # [py<35]
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: true  # [py<38]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
+  build:
+    - patch     # [not win]
+    - m2-patch  # [win]
   host:
     - pip
     - python
     - wheel
     - setuptools
   run:
-    - packaging
     - python
     - numpy
-    - protobuf
     - onnx
+    - packaging
+    # 3.20.2 required but not available on defaults
+    # This change was also made upstream
+    # https://github.com/microsoft/onnxconverter-common/pull/284
+    - protobuf >=3.20.2
 
 test:
   imports:
