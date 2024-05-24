@@ -32,6 +32,8 @@ requirements:
     - onnx
     - packaging
     # 3.20.2 required but not available on defaults
+    # This change was also made upstream
+    # https://github.com/microsoft/onnxconverter-common/pull/284
     - protobuf >=3.20.2
 
 test:
