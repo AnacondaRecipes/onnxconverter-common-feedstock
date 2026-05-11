@@ -19,7 +19,6 @@ requirements:
     - pip
     - python
     - setuptools >=61.0.0
-    - wheel
   run:
     - python
     - numpy
