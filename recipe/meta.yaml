@@ -8,8 +8,6 @@ package:
 source:
   url: https://github.com/microsoft/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: c9a9058f904042ae211e120259690dfeaa5e480e410fa6037ef560ad1411ed6b
-  patches:
-    - patches/0001_remove_protobuf_requirement.patch
 
 build:
   number: 0
@@ -17,19 +15,16 @@ build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
-  build:
   host:
     - pip
     - python
     - setuptools >=61.0.0
+    - wheel
   run:
     - python
     - numpy
     - onnx
     - packaging
-    # 3.20.2 required but not available on defaults
-    # This change was also made upstream
-    # https://github.com/microsoft/onnxconverter-common/pull/284
     - protobuf >=3.20.2
 
 test:
